@@ -1,7 +1,6 @@
 package commands
 
 import (
-	"fmt"
 	"github.com/fernandochristyanto/retsgo/app/core/commands/scaffold"
 	"github.com/urfave/cli"
 	"log"
@@ -40,29 +39,6 @@ func RegisterCommands() {
 			ArgsUsage:   "repo",
 			Action:      scaffold.BeginProjectScaffold,
 			Description: "retsgo newproject github.com/mygithubusername/mynewproject will create a new project under $GOPATH/src/github.com/mygithubusername/mynewproject",
-		},
-		{
-			Name:    "template",
-			Aliases: []string{"t"},
-			Usage:   "options for task templates",
-			Subcommands: []cli.Command{
-				{
-					Name:  "add",
-					Usage: "add a new template",
-					Action: func(c *cli.Context) error {
-						fmt.Println("new task template: ", c.Args().First())
-						return nil
-					},
-				},
-				{
-					Name:  "remove",
-					Usage: "remove an existing template",
-					Action: func(c *cli.Context) error {
-						fmt.Println("removed task template: ", c.Args().First())
-						return nil
-					},
-				},
-			},
 		},
 	}
 	app.After = func(c *cli.Context) error {
