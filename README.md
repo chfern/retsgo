@@ -3,7 +3,7 @@
 
 *I always create more or less the same structure for every api that I made in golang. I got tired, so here is a helper.*
 
-Current Version: 1.0.0
+Current Version: 1.1.0
 
 # Features
 + ORM (github.com/jinzhu/gorm)

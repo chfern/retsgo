@@ -12,7 +12,7 @@ func RegisterCommands() {
 	app.Name = "RETSgo"
 	app.Description = "Scaffold and create a REST api with go in no time"
 	app.Usage = "Scaffold and create a REST api with go in no time"
-	app.Version = "1.0.0"
+	app.Version = scaffold.GetVersion()
 	app.Authors = []cli.Author{
 		cli.Author{
 			Name:  "Fernando Christyanto",

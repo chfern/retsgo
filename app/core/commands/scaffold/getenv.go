@@ -17,3 +17,7 @@ func GetGOPATH() string {
 func GetPKGPATH() string {
 	return "github.com/fernandochristyanto/retsgo"
 }
+
+func GetVersion() string {
+	return "1.1.0"
+}
