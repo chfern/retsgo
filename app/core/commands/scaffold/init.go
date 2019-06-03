@@ -19,5 +19,9 @@ func BeginProjectScaffold(c *cli.Context) {
 		log.Fatal("Invalid repo format.")
 	}
 	fmt.Printf("Creating new project in: %s\n\n", targetPath)
+
 	CopyProjectSkeleton(targetPath)
+	ChangeImportName(targetPath, repo)
+
+	fmt.Println("Done")
 }

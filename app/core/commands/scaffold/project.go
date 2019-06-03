@@ -5,6 +5,8 @@ import (
 	"github.com/otiai10/copy"
 	"log"
 	"os"
+	"path/filepath"
+	"strings"
 )
 
 // CopyProjectSkeleton copies a new project into the $GOPATH/src/repoName e.g: $GOPATH/src/github.com/githubuser/newproject
@@ -42,5 +44,32 @@ func CopyProjectSkeleton(targetPath string) {
 			ClearDir(fmt.Sprintf("%s%s", targetPath, file))
 			os.Remove(fmt.Sprintf("%s%s", targetPath, file))
 		}
+	}
+}
+
+type ProjectFile struct {
+	Path     string
+	FileInfo os.FileInfo
+}
+
+func ChangeImportName(targetPath string, repo string) {
+	// Get All files in project
+	fileList := []ProjectFile{}
+	err := filepath.Walk(targetPath, func(path string, f os.FileInfo, err error) error {
+		fileList = append(fileList, ProjectFile{
+			Path:     path,
+			FileInfo: f,
+		})
+		return nil
+	})
+	if err != nil {
+		log.Fatalln("Project creation error")
+	}
+
+	// Replace def package name e.g: github.com/fernandochristyanto/retsgo with repo name
+	PKGNAME := GetPKGPATH()
+	for _, projectfile := range fileList {
+		fmt.Printf("Generating %s\n", strings.Replace(projectfile.Path+"/", targetPath, "", -1))
+		ReplaceStrInFile(projectfile.Path, projectfile.FileInfo, PKGNAME, repo)
 	}
 }
