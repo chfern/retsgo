@@ -2,6 +2,7 @@ package commands
 
 import (
 	"fmt"
+	"github.com/fernandochristyanto/retsgo/app/core/commands/scaffold"
 	"github.com/urfave/cli"
 	"log"
 	"os"
@@ -32,6 +33,13 @@ func RegisterCommands() {
 			Name:   "install",
 			Usage:  "Installs external dependencies",
 			Action: InstallDependencies,
+		},
+		cli.Command{
+			Name:        "newproject",
+			Usage:       "Generate a new project",
+			ArgsUsage:   "repo",
+			Action:      scaffold.BeginProjectScaffold,
+			Description: "retsgo newproject github.com/mygithubusername/mynewproject will create a new project under $GOPATH/src/github.com/mygithubusername/mynewproject",
 		},
 		{
 			Name:    "template",
