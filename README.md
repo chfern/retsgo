@@ -1,4 +1,4 @@
-# RETSgo
+# RETSgo 🐻
 ## A minimalistic REST-api framework to quickly build a scalable and maintainable api using [google's go](https://golang.org/)
 
 *I always create more or less the same structure for every api that I made in golang. I got tired, so here is a helper.*
