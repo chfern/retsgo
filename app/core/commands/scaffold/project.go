@@ -13,12 +13,6 @@ func CopyProjectSkeleton(targetPath string) {
 	PKGPATH := GetPKGPATH()
 	templateProjectPath := fmt.Sprintf("%s/src/%s", GOPATH, PKGPATH)
 
-	fmt.Println("=== Template project path: ")
-	fmt.Println(templateProjectPath)
-
-	fmt.Println("=== Target project path: ")
-	fmt.Println(targetPath)
-
 	_, err := os.Stat(templateProjectPath)
 	if os.IsNotExist(err) {
 		log.Fatalf("retsgo not found under %s.\n Try running go get %s", templateProjectPath, PKGPATH)
