@@ -1,0 +1,12 @@
+version: '3'
+
+services: 
+  todo-db:
+    image: postgres:10
+    ports: 
+      - 5432:5432
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=MyTodo
+      - POSTGRES_PASSWORD=AAAaaa123
+    container_name: todo-db
