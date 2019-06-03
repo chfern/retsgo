@@ -21,6 +21,7 @@ func Dependencies() *[]Dependency {
 		Dependency{Name: "jinzhu/gorm", GithubURL: "github.com/jinzhu/gorm"},
 		Dependency{Name: "google/wire", GithubURL: "github.com/google/wire"},
 		Dependency{Name: "sirupsen/logrus", GithubURL: "github.com/sirupsen/logrus"},
+		Dependency{Name: "otiai10/copy", GithubURL: "github.com/otiai10/copy"},
 	}
 	return &dependencies
 }
