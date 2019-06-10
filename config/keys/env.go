@@ -17,6 +17,7 @@ type env struct {
 	AppEnv               string
 	ListenerReadTimeout  string
 	ListenerWriteTimeout string
+	JWTSecretKey         string
 }
 
 // Env holds Key for env variables
@@ -37,4 +38,5 @@ var Env = env{
 	AppEnv:               "APP_ENV",
 	ListenerReadTimeout:  "LISTENER_READ_TIMEOUT",
 	ListenerWriteTimeout: "LISTENER_WRITE_TIMEOUT",
+	JWTSecretKey:         "JWT_SECRET_KEY",
 }

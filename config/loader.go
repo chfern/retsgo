@@ -11,6 +11,7 @@ type General struct {
 	AppPort              string
 	ListenerReadTimeout  int
 	ListenerWriteTimeout int
+	JWTSecretKey         string
 }
 
 // Config keeps all variables (env) in an app
@@ -39,6 +40,7 @@ func loadGeneralConf() *General {
 		AppPort:              os.Getenv(keys.Env.AppPort),
 		ListenerReadTimeout:  listenerReadTimeout,
 		ListenerWriteTimeout: listenerWriteTimeout,
+		JWTSecretKey:         os.Getenv(keys.Env.JWTSecretKey),
 	}
 }
 

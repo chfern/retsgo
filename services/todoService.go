@@ -1,27 +1,28 @@
 package services
 
 import (
-	"github.com/fernandochristyanto/retsgo/app/core"
 	"github.com/fernandochristyanto/retsgo/app/db/models"
-	"github.com/fernandochristyanto/retsgo/repositories"
+	"github.com/jinzhu/gorm"
 )
 
 type TodoService struct {
-	repository *repositories.TodoRepository
-	logger     *core.Log
+	db *gorm.DB
 }
 
-func (todoService TodoService) GetAll() *[]models.Todo {
-	return todoService.repository.GetAll()
+func (service TodoService) GetAll() *[]models.Todo {
+	var todos []models.Todo
+	service.db.Find(&todos)
+	return &todos
 }
 
-func (todoService TodoService) GetByID(id int) *models.Todo {
-	return todoService.repository.GetByID(id)
+func (service TodoService) GetByID(id int) *models.Todo {
+	var todo models.Todo
+	service.db.Find(&todo, id)
+	return &todo
 }
 
-func NewTodoService(logger *core.Log, repository *repositories.TodoRepository) *TodoService {
+func NewTodoService(db *gorm.DB) *TodoService {
 	return &TodoService{
-		repository: repository,
-		logger:     logger,
+		db: db,
 	}
 }
