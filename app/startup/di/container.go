@@ -41,8 +41,18 @@ func GetTodoService() *appservice.TodoService {
 }
 
 func GetTodoRepository() *apprepo.TodoRepository {
-	wire.Build(GetTodoService, GetLogger, apprepo.NewTodoRepository)
+	wire.Build(GetTodoService, apprepo.NewTodoRepository)
 	return &apprepo.TodoRepository{}
+}
+
+func GetUserService() *appservice.UserService {
+	wire.Build(appdb.GetDB, appservice.NewUserService)
+	return &appservice.UserService{}
+}
+
+func GetUserRepository() *apprepo.UserRepository {
+	wire.Build(GetUserService, apprepo.NewUserRepository)
+	return &apprepo.UserRepository{}
 }
 
 /**

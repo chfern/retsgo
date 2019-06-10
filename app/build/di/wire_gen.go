@@ -42,9 +42,20 @@ func GetTodoService() *services.TodoService {
 
 func GetTodoRepository() *repositories.TodoRepository {
 	todoService := GetTodoService()
-	log := GetLogger()
-	todoRepository := repositories.NewTodoRepository(todoService, log)
+	todoRepository := repositories.NewTodoRepository(todoService)
 	return todoRepository
+}
+
+func GetUserService() *services.UserService {
+	gormDB := db.GetDB()
+	userService := services.NewUserService(gormDB)
+	return userService
+}
+
+func GetUserRepository() *repositories.UserRepository {
+	userService := GetUserService()
+	userRepository := repositories.NewUserRepository(userService)
+	return userRepository
 }
 
 func GetTodoHandler() *v1.TodoHandler {
