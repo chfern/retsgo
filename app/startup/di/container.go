@@ -35,20 +35,20 @@ func GetPanicMiddleware() *appmiddleware.PanicMiddleware {
 /**
  * REPOSITORIES & SERVICES
  */
-func GetTodoRepository() *apprepo.TodoRepository {
-	wire.Build(appdb.GetDB, apprepo.NewTodoRepository)
-	return &apprepo.TodoRepository{}
+func GetTodoService() *appservice.TodoService {
+	wire.Build(appdb.GetDB, appservice.NewTodoService)
+	return &appservice.TodoService{}
 }
 
-func GetTodoService() *appservice.TodoService {
-	wire.Build(GetLogger, GetTodoRepository, appservice.NewTodoService)
-	return &appservice.TodoService{}
+func GetTodoRepository() *apprepo.TodoRepository {
+	wire.Build(GetTodoService, GetLogger, apprepo.NewTodoRepository)
+	return &apprepo.TodoRepository{}
 }
 
 /**
  * HANDLERS
  */
 func GetTodoHandler() *v1handler.TodoHandler {
-	wire.Build(GetTodoService, v1handler.NewTodoHandler)
+	wire.Build(GetTodoRepository, v1handler.NewTodoHandler)
 	return &v1handler.TodoHandler{}
 }

@@ -31,7 +31,10 @@ func InitDB() {
 		log.Fatalln("Error connecting to DB: ", err)
 	}
 
-	db.AutoMigrate(&models.Todo{})
+	db.AutoMigrate(
+		&models.Todo{},
+		&models.User{},
+	)
 
 	database = db
 	initialized = true

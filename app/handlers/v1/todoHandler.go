@@ -2,7 +2,7 @@ package v1
 
 import (
 	"github.com/fernandochristyanto/retsgo/app/core"
-	appservice "github.com/fernandochristyanto/retsgo/services"
+	apprepo "github.com/fernandochristyanto/retsgo/repositories"
 	"github.com/gorilla/mux"
 	"github.com/json-iterator/go"
 	"net/http"
@@ -10,11 +10,11 @@ import (
 )
 
 type TodoHandler struct {
-	todoService *appservice.TodoService
+	todoRepo *apprepo.TodoRepository
 }
 
 func (handler TodoHandler) GetAll(w http.ResponseWriter, r *http.Request) {
-	todos := handler.todoService.GetAll()
+	todos := handler.todoRepo.GetAll()
 	json := jsoniter.ConfigCompatibleWithStandardLibrary
 
 	todosJSON, _ := json.Marshal(todos)
@@ -28,7 +28,7 @@ func (handler TodoHandler) GetByID(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(core.NewHttpException(http.StatusBadRequest, "ID must be an int"))
 	}
-	todo := handler.todoService.GetByID(id)
+	todo := handler.todoRepo.GetByID(id)
 	json := jsoniter.ConfigCompatibleWithStandardLibrary
 
 	todoJSON, _ := json.Marshal(todo)
@@ -36,8 +36,8 @@ func (handler TodoHandler) GetByID(w http.ResponseWriter, r *http.Request) {
 	w.Write(todoJSON)
 }
 
-func NewTodoHandler(todoService *appservice.TodoService) *TodoHandler {
+func NewTodoHandler(todoRepo *apprepo.TodoRepository) *TodoHandler {
 	return &TodoHandler{
-		todoService: todoService,
+		todoRepo: todoRepo,
 	}
 }

@@ -34,21 +34,21 @@ func GetPanicMiddleware() *middleware.PanicMiddleware {
 	return panicMiddleware
 }
 
-func GetTodoRepository() *repositories.TodoRepository {
-	gormDB := db.GetDB()
-	todoRepository := repositories.NewTodoRepository(gormDB)
-	return todoRepository
-}
-
 func GetTodoService() *services.TodoService {
-	log := GetLogger()
-	todoRepository := GetTodoRepository()
-	todoService := services.NewTodoService(log, todoRepository)
+	gormDB := db.GetDB()
+	todoService := services.NewTodoService(gormDB)
 	return todoService
 }
 
-func GetTodoHandler() *v1.TodoHandler {
+func GetTodoRepository() *repositories.TodoRepository {
 	todoService := GetTodoService()
-	todoHandler := v1.NewTodoHandler(todoService)
+	log := GetLogger()
+	todoRepository := repositories.NewTodoRepository(todoService, log)
+	return todoRepository
+}
+
+func GetTodoHandler() *v1.TodoHandler {
+	todoRepository := GetTodoRepository()
+	todoHandler := v1.NewTodoHandler(todoRepository)
 	return todoHandler
 }
