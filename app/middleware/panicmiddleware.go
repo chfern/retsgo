@@ -18,20 +18,18 @@ func (panicMiddleware PanicMiddleware) M(handler http.Handler) http.Handler {
 
 		defer func() {
 			if r := recover(); r != nil {
-				errJSON, _ := json.Marshal(templateapi.NewError(fmt.Sprint(r)))
 				w.Header().Set("Content-Type", "application/json")
-				w.WriteHeader(http.StatusInternalServerError)
-				w.Write(errJSON)
-			}
-		}()
+				httpException, valid := r.(*core.HttpException)
 
-		defer func() {
-			if r := recover(); r != nil {
-				httpException := r.(*core.HttpException)
-				errJSON, _ := json.Marshal(templateapi.NewError(httpException.Error))
-				w.Header().Set("Content-Type", "application/json")
-				w.WriteHeader(httpException.Code)
-				w.Write(errJSON)
+				if valid {
+					errJSON, _ := json.Marshal(templateapi.NewError(httpException.Error))
+					w.WriteHeader(httpException.Code)
+					w.Write(errJSON)
+				} else {
+					errJSON, _ := json.Marshal(templateapi.NewError(fmt.Sprint(r)))
+					w.WriteHeader(http.StatusInternalServerError)
+					w.Write(errJSON)
+				}
 			}
 		}()
 

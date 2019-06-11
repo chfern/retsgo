@@ -1,10 +1,15 @@
 package models
 
+import (
+	"github.com/jinzhu/gorm"
+)
+
 type User struct {
-	Base
+	gorm.Model
 	Username string `gorm:"type:varchar(255);column:Username" json:"username"`
 	Password string `gorm:"type:varchar(255);column:Password" json:"-"`
-	Todos    []Todo `gorm:"foreignkey:UserID;association_foreignkey:ID" json:"todos"`
+	Role     string `gorm:"type:varchar(255);column:Role" json:"role"`
+	Todos    []Todo `gorm:"foreignkey:UserID" json:"todos"`
 }
 
 func (User) TableName() string {

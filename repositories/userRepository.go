@@ -13,6 +13,14 @@ func (repo UserRepository) GetByUsernameAndPassword(username string, password st
 	return repo.service.GetByUsernameAndPassword(username, password)
 }
 
+func (repo UserRepository) GetByID(id int64) *models.User {
+	return repo.service.GetByID(id)
+}
+
+func (repo UserRepository) GetTodos(id int64) *[]models.Todo {
+	return repo.service.GetTodos(id)
+}
+
 func NewUserRepository(service *services.UserService) *UserRepository {
 	return &UserRepository{
 		service: service,

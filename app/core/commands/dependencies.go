@@ -15,13 +15,14 @@ type Dependency struct {
 func Dependencies() *[]Dependency {
 	dependencies := []Dependency{
 		Dependency{Name: "justinas/alice", GithubURL: "github.com/justinas/alice"},
-		Dependency{Name: "gorilla/mux", GithubURL: "github.com/gorilla/mux"},
+		Dependency{Name: "gorilla/mux", GithubURL: "github.com/gorilla/mux"},	
 		Dependency{Name: "json-iterator", GithubURL: "github.com/json-iterator/go"},
 		Dependency{Name: "urfave/cli", GithubURL: "github.com/urfave/cli"},
 		Dependency{Name: "jinzhu/gorm", GithubURL: "github.com/jinzhu/gorm"},
 		Dependency{Name: "google/wire", GithubURL: "github.com/google/wire"},
 		Dependency{Name: "sirupsen/logrus", GithubURL: "github.com/sirupsen/logrus"},
 		Dependency{Name: "otiai10/copy", GithubURL: "github.com/otiai10/copy"},
+		Dependency{Name: "dgrijalva/jwt-go", GithubURL: "github.com/dgrijalva/jwt-go"},
 	}
 	return &dependencies
 }

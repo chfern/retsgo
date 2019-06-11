@@ -10,6 +10,7 @@ import (
 	"github.com/fernandochristyanto/retsgo/app/db"
 	"github.com/fernandochristyanto/retsgo/app/handlers/v1"
 	"github.com/fernandochristyanto/retsgo/app/middleware"
+	"github.com/fernandochristyanto/retsgo/app/middleware/jwt/validator"
 	"github.com/fernandochristyanto/retsgo/repositories"
 	"github.com/fernandochristyanto/retsgo/services"
 )
@@ -32,6 +33,18 @@ func GetPanicMiddleware() *middleware.PanicMiddleware {
 	log := GetLogger()
 	panicMiddleware := middleware.NewPanicMiddleware(log)
 	return panicMiddleware
+}
+
+func GetJWTMiddleware() *middleware.JWTMiddleware {
+	userRepository := GetUserRepository()
+	jwtMiddleware := middleware.NewJWTMiddleware(userRepository)
+	return jwtMiddleware
+}
+
+func GetJWTUserValidator() *validator.UserValidator {
+	userRepository := GetUserRepository()
+	userValidator := validator.NewUserValidator(userRepository)
+	return userValidator
 }
 
 func GetTodoService() *services.TodoService {
@@ -62,4 +75,16 @@ func GetTodoHandler() *v1.TodoHandler {
 	todoRepository := GetTodoRepository()
 	todoHandler := v1.NewTodoHandler(todoRepository)
 	return todoHandler
+}
+
+func GetJWTHandler() *v1.JWTHandler {
+	userRepository := GetUserRepository()
+	jwtHandler := v1.NewJWTHandler(userRepository)
+	return jwtHandler
+}
+
+func GetUserHandler() *v1.UserHandler {
+	userRepository := GetUserRepository()
+	userHandler := v1.NewUserHandler(userRepository)
+	return userHandler
 }

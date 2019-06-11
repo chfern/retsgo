@@ -12,6 +12,7 @@ type General struct {
 	ListenerReadTimeout  int
 	ListenerWriteTimeout int
 	JWTSecretKey         string
+	JWTTimeoutMins       int
 }
 
 // Config keeps all variables (env) in an app
@@ -36,11 +37,13 @@ type productionConfig struct{}
 func loadGeneralConf() *General {
 	listenerReadTimeout, _ := strconv.Atoi(os.Getenv(keys.Env.ListenerReadTimeout))
 	listenerWriteTimeout, _ := strconv.Atoi(os.Getenv(keys.Env.ListenerWriteTimeout))
+	jwtTimeoutMins, _ := strconv.Atoi(os.Getenv(keys.Env.JWTTimeoutMins))
 	return &General{
 		AppPort:              os.Getenv(keys.Env.AppPort),
 		ListenerReadTimeout:  listenerReadTimeout,
 		ListenerWriteTimeout: listenerWriteTimeout,
 		JWTSecretKey:         os.Getenv(keys.Env.JWTSecretKey),
+		JWTTimeoutMins:       jwtTimeoutMins,
 	}
 }
 

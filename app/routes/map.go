@@ -26,5 +26,5 @@ func (m *Mapper) WithMiddleware(constructors ...alice.Constructor) *Mapper {
 
 func (m *Mapper) To(handler func(w http.ResponseWriter, r *http.Request)) *mux.Route {
 	defaultMiddlewares := GetDefaultMiddlewares()
-	return m.router.Handle(m.path, alice.New(defaultMiddlewares...).Then(http.HandlerFunc(handler)))
+	return m.router.Handle(m.path, alice.New(defaultMiddlewares...).Append(m.middlewares...).Then(http.HandlerFunc(handler)))
 }
