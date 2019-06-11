@@ -12,7 +12,7 @@ Current Version: 1.1.0
 + Mux (github.com/gorilla/mux)
 + Compile-Time Dependency Injection (github.com/google/wire)
 + Scalable configurations for development, testing and production
-+ JWT (Coming Soon)
++ JWT
 
 
 # QuickStart
