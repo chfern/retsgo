@@ -24,21 +24,29 @@ func RegisterCommands() {
 
 	app.Commands = []cli.Command{
 		cli.Command{
-			Name:   "dependencies",
-			Usage:  "List all dependencies needed to be installed",
-			Action: PrintDependencies,
+			Name:        "dependencies",
+			Usage:       "retsgo dependencies",
+			Action:      PrintDependencies,
+			Description: "List all dependencies needed to be installed",
 		},
 		cli.Command{
-			Name:   "install",
-			Usage:  "Installs external dependencies",
-			Action: InstallDependencies,
+			Name:        "install",
+			Usage:       "retsgo install",
+			Action:      InstallDependencies,
+			Description: "Installs external dependencies",
 		},
 		cli.Command{
 			Name:        "newproject",
-			Usage:       "Generate a new project",
+			Usage:       "retsgo newproject github.com/mygithubusername/mynewproject",
 			ArgsUsage:   "repo",
 			Action:      scaffold.BeginProjectScaffold,
-			Description: "retsgo newproject github.com/mygithubusername/mynewproject will create a new project under $GOPATH/src/github.com/mygithubusername/mynewproject",
+			Description: "Generate a new project. retsgo newproject github.com/mygithubusername/mynewproject will create a new project under $GOPATH/src/github.com/mygithubusername/mynewproject",
+		},
+		cli.Command{
+			Name:        "wiregen",
+			Usage:       "retsgo wiregen",
+			Action:      WireGen,
+			Description: "Run this command in the root of the projectdir to generate wire-inject file in /projectdir/app/build/di/wire_gen.go. You should have a container.go file in /projectdir/app/startup/di/container.go",
 		},
 	}
 	app.After = func(c *cli.Context) error {
