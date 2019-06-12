@@ -22,10 +22,12 @@ func (service UserService) GetByID(id int64) *models.User {
 }
 
 func (service UserService) GetTodos(id int64) *[]models.Todo {
-	user := service.GetByID(id)
 	var todos []models.Todo
-	a := service.db.Model(&user)
-	a.Related(&todos)
+	service.db.Table("users").
+		Select("todos.*").
+		Joins(`join todos on todos."UserID" = users."ID"`).
+		Where(`users."ID" = ?`, id).
+		Scan(&todos)
 	return &todos
 }
 
