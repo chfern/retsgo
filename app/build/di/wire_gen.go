@@ -47,18 +47,6 @@ func GetJWTUserValidator() *validator.UserValidator {
 	return userValidator
 }
 
-func GetTodoService() *services.TodoService {
-	gormDB := db.GetDB()
-	todoService := services.NewTodoService(gormDB)
-	return todoService
-}
-
-func GetTodoRepository() *repositories.TodoRepository {
-	todoService := GetTodoService()
-	todoRepository := repositories.NewTodoRepository(todoService)
-	return todoRepository
-}
-
 func GetUserService() *services.UserService {
 	gormDB := db.GetDB()
 	userService := services.NewUserService(gormDB)
@@ -71,20 +59,8 @@ func GetUserRepository() *repositories.UserRepository {
 	return userRepository
 }
 
-func GetTodoHandler() *v1.TodoHandler {
-	todoRepository := GetTodoRepository()
-	todoHandler := v1.NewTodoHandler(todoRepository)
-	return todoHandler
-}
-
 func GetJWTHandler() *v1.JWTHandler {
 	userRepository := GetUserRepository()
 	jwtHandler := v1.NewJWTHandler(userRepository)
 	return jwtHandler
-}
-
-func GetUserHandler() *v1.UserHandler {
-	userRepository := GetUserRepository()
-	userHandler := v1.NewUserHandler(userRepository)
-	return userHandler
 }

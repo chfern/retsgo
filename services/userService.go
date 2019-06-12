@@ -21,16 +21,6 @@ func (service UserService) GetByID(id int64) *models.User {
 	return &user
 }
 
-func (service UserService) GetTodos(id int64) *[]models.Todo {
-	var todos []models.Todo
-	service.db.Table("users").
-		Select("todos.*").
-		Joins(`join todos on todos."UserID" = users."ID"`).
-		Where(`users."ID" = ?`, id).
-		Scan(&todos)
-	return &todos
-}
-
 func NewUserService(db *gorm.DB) *UserService {
 	return &UserService{
 		db: db,

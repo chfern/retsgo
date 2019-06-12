@@ -41,14 +41,6 @@ func GetJWTUserValidator() *jwtvalidator.UserValidator {
 /**
  * REPOSITORIES & SERVICES
  */
-func GetTodoService() *appservice.TodoService {
-	panic(wire.Build(appdb.GetDB, appservice.NewTodoService))
-}
-
-func GetTodoRepository() *apprepo.TodoRepository {
-	panic(wire.Build(GetTodoService, apprepo.NewTodoRepository))
-}
-
 func GetUserService() *appservice.UserService {
 	panic(wire.Build(appdb.GetDB, appservice.NewUserService))
 }
@@ -60,14 +52,6 @@ func GetUserRepository() *apprepo.UserRepository {
 /**
  * HANDLERS
  */
-func GetTodoHandler() *v1handler.TodoHandler {
-	panic(wire.Build(GetTodoRepository, v1handler.NewTodoHandler))
-}
-
 func GetJWTHandler() *v1handler.JWTHandler {
 	panic(wire.Build(GetUserRepository, v1handler.NewJWTHandler))
-}
-
-func GetUserHandler() *v1handler.UserHandler {
-	panic(wire.Build(GetUserRepository, v1handler.NewUserHandler))
 }
