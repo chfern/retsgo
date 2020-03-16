@@ -2,23 +2,27 @@ package repositories
 
 import (
 	"github.com/fernandochristyanto/retsgo/app/db/models"
-	"github.com/fernandochristyanto/retsgo/services"
+	"github.com/jinzhu/gorm"
 )
 
 type UserRepository struct {
-	service *services.UserService
+	db *gorm.DB
 }
 
 func (repo UserRepository) GetByUsernameAndPassword(username string, password string) *models.User {
-	return repo.service.GetByUsernameAndPassword(username, password)
+	var user models.User
+	repo.db.Where(&models.User{Username: username, Password: password}).First(&user)
+	return &user
 }
 
 func (repo UserRepository) GetByID(id int64) *models.User {
-	return repo.service.GetByID(id)
+	var user models.User
+	repo.db.Find(&user, id)
+	return &user
 }
 
-func NewUserRepository(service *services.UserService) *UserRepository {
+func NewUserRepository(db *gorm.DB) *UserRepository {
 	return &UserRepository{
-		service: service,
+		db: db,
 	}
 }

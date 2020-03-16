@@ -3,7 +3,7 @@
 package di
 
 import (
-	appcore "github.com/fernandochristyanto/retsgo/app/core"
+	"github.com/fernandochristyanto/retsgo/app/core"
 	appdb "github.com/fernandochristyanto/retsgo/app/db"
 	v1handler "github.com/fernandochristyanto/retsgo/app/handlers/v1"
 	appmiddleware "github.com/fernandochristyanto/retsgo/app/middleware"
@@ -16,8 +16,22 @@ import (
 /**
  * HELPERS
  */
-func GetLogger() *appcore.Log {
-	panic(wire.Build(appcore.NewLogrusLogger, appcore.NewLogger))
+func GetLogger() *core.Log {
+	panic(wire.Build(core.NewLogrusLogger, core.NewLogger))
+}
+
+/**
+ * REPOSITORIES
+ */
+func GetUserRepository() *apprepo.UserRepository {
+	panic(wire.Build(appdb.GetDB, apprepo.NewUserRepository))
+}
+
+/**
+ * SERVICES
+ */
+func GetUserService() *appservice.UserService {
+	panic(wire.Build(GetUserRepository, appservice.NewUserService))
 }
 
 /**
@@ -26,32 +40,21 @@ func GetLogger() *appcore.Log {
 func GetLoggerMiddleware() *appmiddleware.LogMiddleware {
 	panic(wire.Build(GetLogger, appmiddleware.NewLogMiddleware))
 }
+
 func GetPanicMiddleware() *appmiddleware.PanicMiddleware {
 	panic(wire.Build(GetLogger, appmiddleware.NewPanicMiddleware))
 }
 
 func GetJWTMiddleware() *appmiddleware.JWTMiddleware {
-	panic(wire.Build(GetUserRepository, appmiddleware.NewJWTMiddleware))
+	panic(wire.Build(GetUserService, appmiddleware.NewJWTMiddleware))
 }
-
 func GetJWTUserValidator() *jwtvalidator.UserValidator {
-	panic(wire.Build(GetUserRepository, jwtvalidator.NewUserValidator))
-}
-
-/**
- * REPOSITORIES & SERVICES
- */
-func GetUserService() *appservice.UserService {
-	panic(wire.Build(appdb.GetDB, appservice.NewUserService))
-}
-
-func GetUserRepository() *apprepo.UserRepository {
-	panic(wire.Build(GetUserService, apprepo.NewUserRepository))
+	panic(wire.Build(GetUserService, jwtvalidator.NewUserValidator))
 }
 
 /**
  * HANDLERS
  */
 func GetJWTHandler() *v1handler.JWTHandler {
-	panic(wire.Build(GetUserRepository, v1handler.NewJWTHandler))
+	panic(wire.Build(GetUserService, v1handler.NewJWTHandler))
 }

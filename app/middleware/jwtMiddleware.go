@@ -4,14 +4,14 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	appjwt "github.com/fernandochristyanto/retsgo/app/middleware/jwt"
 	"github.com/fernandochristyanto/retsgo/config"
-	apprepo "github.com/fernandochristyanto/retsgo/repositories"
+	services "github.com/fernandochristyanto/retsgo/services"
 	"net/http"
 	"strings"
 )
 
 type JWTMiddleware struct {
 	validatorFuncs []func(claims *appjwt.Claims) bool
-	userRepository *apprepo.UserRepository
+	userService    *services.UserService
 }
 
 func (jwtMiddleware JWTMiddleware) M(handler http.Handler) http.Handler {
@@ -61,7 +61,7 @@ func (jwtMiddleware JWTMiddleware) M(handler http.Handler) http.Handler {
 		}
 
 		// Set Set-Authorization header
-		user := jwtMiddleware.userRepository.GetByID(claims.ID)
+		user := jwtMiddleware.userService.GetByID(claims.ID)
 		w.Header().Set("Set-Authorization", appjwt.GenerateToken(user))
 
 		handler.ServeHTTP(w, r)
@@ -73,8 +73,8 @@ func (jwtMiddleware JWTMiddleware) With(validator ...func(claims *appjwt.Claims)
 	return jwtMiddleware
 }
 
-func NewJWTMiddleware(userRepo *apprepo.UserRepository) *JWTMiddleware {
+func NewJWTMiddleware(userService *services.UserService) *JWTMiddleware {
 	return &JWTMiddleware{
-		userRepository: userRepo,
+		userService: userService,
 	}
 }

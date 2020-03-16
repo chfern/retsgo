@@ -2,27 +2,23 @@ package services
 
 import (
 	"github.com/fernandochristyanto/retsgo/app/db/models"
-	"github.com/jinzhu/gorm"
+	"github.com/fernandochristyanto/retsgo/repositories"
 )
 
 type UserService struct {
-	db *gorm.DB
+	userRepository *repositories.UserRepository
 }
 
 func (service UserService) GetByUsernameAndPassword(username string, password string) *models.User {
-	var user models.User
-	service.db.Where(&models.User{Username: username, Password: password}).First(&user)
-	return &user
+	return service.userRepository.GetByUsernameAndPassword(username, password)
 }
 
 func (service UserService) GetByID(id int64) *models.User {
-	var user models.User
-	service.db.Find(&user, id)
-	return &user
+	return service.userRepository.GetByID(id)
 }
 
-func NewUserService(db *gorm.DB) *UserService {
+func NewUserService(userRepository *repositories.UserRepository) *UserService {
 	return &UserService{
-		db: db,
+		userRepository: userRepository,
 	}
 }

@@ -8,7 +8,6 @@ import (
 )
 
 func WireGen(c *cli.Context) {
-	// pathToContainer := "app/startup/di/container.go"
 	pathToContainer := "app/startup/di"
 
 	// Check if container exists
@@ -22,10 +21,12 @@ func WireGen(c *cli.Context) {
 		"-c",
 		fmt.Sprintf("cd %s; wire; mv wire_gen.go ../../build/di/", pathToContainer),
 	)
-	_, err := cmd.Output()
+	cmd.Stderr = os.Stderr
+	err := cmd.Run()
 	if err != nil {
 		fmt.Printf("Error generating wire_gen from %s\n", pathToContainer)
-		fmt.Println(err)
 		return
 	}
+
+	fmt.Println("Success")
 }

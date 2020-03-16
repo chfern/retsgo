@@ -23,6 +23,18 @@ func GetLogger() *core.Log {
 	return log
 }
 
+func GetUserRepository() *repositories.UserRepository {
+	gormDB := db.GetDB()
+	userRepository := repositories.NewUserRepository(gormDB)
+	return userRepository
+}
+
+func GetUserService() *services.UserService {
+	userRepository := GetUserRepository()
+	userService := services.NewUserService(userRepository)
+	return userService
+}
+
 func GetLoggerMiddleware() *middleware.LogMiddleware {
 	log := GetLogger()
 	logMiddleware := middleware.NewLogMiddleware(log)
@@ -36,31 +48,19 @@ func GetPanicMiddleware() *middleware.PanicMiddleware {
 }
 
 func GetJWTMiddleware() *middleware.JWTMiddleware {
-	userRepository := GetUserRepository()
-	jwtMiddleware := middleware.NewJWTMiddleware(userRepository)
+	userService := GetUserService()
+	jwtMiddleware := middleware.NewJWTMiddleware(userService)
 	return jwtMiddleware
 }
 
 func GetJWTUserValidator() *validator.UserValidator {
-	userRepository := GetUserRepository()
-	userValidator := validator.NewUserValidator(userRepository)
+	userService := GetUserService()
+	userValidator := validator.NewUserValidator(userService)
 	return userValidator
 }
 
-func GetUserService() *services.UserService {
-	gormDB := db.GetDB()
-	userService := services.NewUserService(gormDB)
-	return userService
-}
-
-func GetUserRepository() *repositories.UserRepository {
-	userService := GetUserService()
-	userRepository := repositories.NewUserRepository(userService)
-	return userRepository
-}
-
 func GetJWTHandler() *v1.JWTHandler {
-	userRepository := GetUserRepository()
-	jwtHandler := v1.NewJWTHandler(userRepository)
+	userService := GetUserService()
+	jwtHandler := v1.NewJWTHandler(userService)
 	return jwtHandler
 }

@@ -2,11 +2,11 @@ package validator
 
 import (
 	appjwt "github.com/fernandochristyanto/retsgo/app/middleware/jwt"
-	apprepo "github.com/fernandochristyanto/retsgo/repositories"
+	appservice "github.com/fernandochristyanto/retsgo/services"
 )
 
 type UserValidator struct {
-	userRepository *apprepo.UserRepository
+	userService *appservice.UserService
 }
 
 func (validator UserValidator) Validate(claims *appjwt.Claims) bool {
@@ -14,7 +14,7 @@ func (validator UserValidator) Validate(claims *appjwt.Claims) bool {
 		return false
 	}
 
-	user := validator.userRepository.GetByID(claims.ID)
+	user := validator.userService.GetByID(claims.ID)
 	if user == nil {
 		return false
 	}
@@ -22,8 +22,8 @@ func (validator UserValidator) Validate(claims *appjwt.Claims) bool {
 	return true
 }
 
-func NewUserValidator(userRepo *apprepo.UserRepository) *UserValidator {
+func NewUserValidator(userService *appservice.UserService) *UserValidator {
 	return &UserValidator{
-		userRepository: userRepo,
+		userService: userService,
 	}
 }

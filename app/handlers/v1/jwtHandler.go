@@ -2,13 +2,13 @@ package v1
 
 import (
 	appjwt "github.com/fernandochristyanto/retsgo/app/middleware/jwt"
-	apprepo "github.com/fernandochristyanto/retsgo/repositories"
+	services "github.com/fernandochristyanto/retsgo/services"
 	"github.com/json-iterator/go"
 	"net/http"
 )
 
 type JWTHandler struct {
-	userRepository *apprepo.UserRepository
+	userService *services.UserService
 }
 
 func (handler JWTHandler) Login(w http.ResponseWriter, r *http.Request) {
@@ -20,7 +20,7 @@ func (handler JWTHandler) Login(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	user := handler.userRepository.GetByUsernameAndPassword(
+	user := handler.userService.GetByUsernameAndPassword(
 		credentials.Username,
 		credentials.Password,
 	)
@@ -40,8 +40,8 @@ func (handler JWTHandler) Login(w http.ResponseWriter, r *http.Request) {
 	w.Write(resp)
 }
 
-func NewJWTHandler(userRepository *apprepo.UserRepository) *JWTHandler {
+func NewJWTHandler(userService *services.UserService) *JWTHandler {
 	return &JWTHandler{
-		userRepository: userRepository,
+		userService: userService,
 	}
 }
