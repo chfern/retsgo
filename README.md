@@ -29,7 +29,7 @@ Run `retsgo -v`
 it should print out the version number (if it does not, try restarting your terminal)
 
 Create a new directory to hold your project, e.g:   
-`mkdir -p $GOPATH/src/github.com/mygithubusername/newproject`
+`mkdir -p $GOPATH/src/github.com/mygithubusername/newprojectname`
 
 Generate a new project  
-`retsgo newproject github.com/mygithubusername/newproject`
+`retsgo newproject github.com/mygithubusername/newprojectname`
