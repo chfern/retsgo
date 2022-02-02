@@ -1,5 +1,5 @@
 # RETSgo 🐻
-## A minimalistic REST-api framework to quickly backend apis using [google's go](https://golang.org/)
+## A minimalistic REST-api framework to scaffold backend api using [google's go](https://golang.org/)
 
 *A helper I made to (hopefully) simplify API scaffolding process*
 
